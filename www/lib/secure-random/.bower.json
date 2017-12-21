@@ -1,0 +1,32 @@
+{
+  "name": "secure-random",
+  "version": "1.1.1",
+  "description": "Normalize the creation of cryptographically strong random values.",
+  "repo": "https://github.com/jprichardson/secure-random",
+  "keywords": [
+    "crypto",
+    "cryptography",
+    "secure",
+    "random",
+    "rand",
+    "generator",
+    "number"
+  ],
+  "ignore": [
+    "node_modules/",
+    "package.json",
+    "component.json"
+  ],
+  "main": "./lib/secure-random.js",
+  "homepage": "https://github.com/jprichardson/secure-random",
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.1",
+    "commit": "d5acb384634b44cbc13b7ba953e551d9141e0c07"
+  },
+  "_source": "https://github.com/jprichardson/secure-random.git",
+  "_target": "^1.1.1",
+  "_originalSource": "secure-random",
+  "_direct": true
+}

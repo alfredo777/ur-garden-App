@@ -1,0 +1,38 @@
+.category{
+	background: #fefefe;
+	border: 2px solid #fcfcfc;
+	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	margin: 10px 0 2px 10px;
+	padding: 15px;
+	padding-bottom: 10px;
+	transition: opacity .4s ease-in-out;
+    display: inline-block;
+    column-break-inside: avoid;
+    max-width: 45%;
+    text-align: center;
+}
+
+.mid-img{
+	width: 33.3%;
+	float: left;
+}
+
+.slide-cat{
+	width: 100%;
+	border-bottom: solid 2px #e1e1e1;
+}
+.text-justify{
+	text-align: justify;
+}
+
+.truncate-text{
+    white-space: nowrap; 
+    width: 8em; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.title-text{
+	font-weight: 600;
+    font-size: 15px;
+}

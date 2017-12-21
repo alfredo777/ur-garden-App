@@ -1,0 +1,22 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div class="form-style-2">
+	<center>
+	<form id="form-search" >
+		<input type="search" name="search" placeholder="Buscar producto" class="input-field col s12" id="search"  >
+		<button class="button-bordered blue-button mid-button">
+		Buscar <i class="fa fa-search" aria-hidden="true"></i>
+		</button>
+	</form>
+	</center>
+</div>
+<script type="text/javascript">
+$("#form-search").submit(function(e) {
+	var search = $("#search").val();
+	search_result(search);
+	e.preventDefault();
+});
+</script>

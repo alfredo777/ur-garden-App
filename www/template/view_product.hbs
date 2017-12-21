@@ -1,0 +1,75 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div class="container">
+	<div class="single-product">
+		<h2>{{nombre}}</h2>
+		{{#equal descuento 0}}
+		<p class="price">Precio: ${{precio_final}}</p>
+		{{else}}
+		<p class="price">Precio de oferta: ${{precio_final}}</p>
+		{{/equal}}
+
+		<br/><br/>
+		<div class="slide-cat" id="slider">
+		    <div style="background: #eee; padding: 40px;">
+		    <center>
+			<img src="img/Spinner.svg">
+			</center>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+		<div style="width: 100%;">
+		<p class="text-justify">{{descripccion}}</p>
+		</div>
+		<center>
+        {{#if color1}}
+		<div class="button-bordered green-button floating-button-50" onclick="changeColor('{{color1}}');">{{color1}}</div>
+		{{/if}}
+		{{#if color2}}
+		<div class="button-bordered green-button floating-button-50" onclick="changeColor('{{color2}}');">{{color2}}</div>
+		{{/if}}
+		{{#if color3}}
+		<div class="button-bordered green-button floating-button-50" onclick="changeColor('{{color3}}');">{{color3}}</div>
+		{{/if}}
+		{{#if color4}}
+		<div class="button-bordered green-button floating-button-50" onclick="changeColor('{{color4}}');">{{color4}}</div>
+		{{/if}}
+		{{#if color5}}
+		<div class="button-bordered green-button floating-button-50" onclick="changeColor('{{color5}}');">{{color5}}</div>
+		{{/if}}
+      	</center>
+      	 <div id="button-add-data">
+	     <a class="button-bordered gold-button button-90" onclick="add_product_selection_to_data_base({{Id}},'{{color1}}','{{nombre}}')"><i class="fa fa-shopping-cart"></i> Agregar en color {{color1}}</a>
+	     </div>
+	</div>
+
+	<script type="text/javascript">
+		function changeColor(color){
+			var button = '<a class="button-bordered gold-button button-90" onclick='+'"add_product_selection_to_data_base({{Id}},'+"'"+color+"'"+','+"'"+'{{nombre}}'+"'"+')"'+'><i class="fa fa-shopping-cart"></i>  Agregar en color '+ color+' </a>';
+			$('#button-add-data').html(button);
+
+
+		}
+	</script>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+url = domine + 'api/image_products?id='+"{{Id}}";
+console.log(url);
+$.ajax({
+url: url,
+cache: true,
+method: 'POST',
+success: function(data){
+console.log('Cargando imagenes');
+loadView(data,'images_to_slide','slider');
+},
+error: function(err) {
+console.log(err);
+}
+});
+});
+</script>

@@ -1,0 +1,88 @@
+<style type="text/css">
+ol.simple-list {
+list-style-type: none;
+list-style-type: decimal !ie; /*IE 7- hack*/
+
+margin: 0;
+margin-left: 3em;
+padding: 0;
+
+counter-reset: li-counter;
+}
+ol.simple-list > li{
+position: relative;
+margin-bottom: 20px;
+padding-left: 0.5em;
+min-height: 3em;
+border-left: 2px solid #CCCCCC;
+}
+ol.simple-list > li:before {
+position: absolute;
+top: 0;
+left: -1em;
+width: 0.8em;
+font-size: 3em;
+line-height: 1;
+font-weight: bold;
+text-align: right;
+color: #464646;
+content: counter(li-counter);
+counter-increment: li-counter;
+}
+</style>
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div class="post">
+	<div class="container">
+		<br/>
+		<div class="post-head">
+			<ul>
+				<li><h4>PEDIDOS DEL CLIENTE</h4></li>
+			</ul>
+		</div>
+		<i>Del último al primero</i>
+		<br/><br/>
+		{{#if pedidos}}
+		<ol class="simple-list">
+			{{reverse pedidos}}
+			{{#each pedidos}}
+			<li>
+				<a onclick="loadOrder('{{conekta_order}}')">{{codigo}}</a>
+			</li>
+			{{/each}}
+		</ol>
+		{{else}}
+		<center>
+		<br/><br/><br/><br/>
+		<h3>No hay productos en el carrito.</h3><br/><br/>
+		<a onclick="get_products();" class="button-bordered gold-button mid-button">Seguir comprando <i class="fa fa-cart-plus" aria-hidden="true"></i>
+		</a>
+		</center>
+		{{/if}}
+	</div>
+</diV>
+<script type="text/javascript">
+var paginateALL = window.localStorage.setItem("PageProducts", 'ARX');
+</script>
+<script type="text/javascript">
+function loadOrder(order){
+	url = domine + 'api/find_order?conekta_order='+order;
+console.log(url);
+show_ajax();
+$.ajax({
+url: url,
+cache: true,
+success: function(data) {
+console.log('Respuesta satisfactoria');
+loadView(data, 'pedido', 'layout-div');
+hide_ajax();
+},
+error: function(err) {
+console.log(err);
+}
+});
+}
+</script>

@@ -1,0 +1,112 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+{{#if productos}}
+<div class="products-box">
+  {{#each productos}}
+  <div class="row" style="border-top: solid 2px #eee;" id="product{{Id}}">
+    <div class="col s5" style="margin-top:5px !important;">
+      <div style="width:100%; border: solid 3px #D1EBD9 !important; background-image: url('{{img}}'); background-size: 100% 100%; height:100px;" id="bgim-{{Id}}">
+        <div class="load"></div>
+      </div>
+    </div>
+    <div class="col s5"  style="margin-top:5px !important;">
+      <a href="" style="font-size: 15px !important; line-height: 15px !important;">{{nombre}}</a><br/>
+      {{#if descuento}}
+      <div style="font-size: 12px;">Precio de oferta: ${{precio_final}}</div><br/>
+      {{else}}
+      <div style="font-size: 12px;">Precio: ${{precio_final}}</div><br/>
+      {{/if}}
+      {{#each color}}
+        {{#each this}}
+        <li>
+          {{@key}}: {{this}}
+        </li>
+        {{/each}}
+        
+      {{/each}}
+      <b style="font-size: 10px;">Cantidad: {{quantity}}</b><br/>
+      <b style="font-size: 20px;">Total: ${{total}}</b>
+    </div>
+    <div class="col s2"  style="margin-top:5px !important;">
+     <a onclick="quit_product_cart({{Id}});" class="button-bordered raspberry-button"> <i class="fa fa-remove"></i> </a>
+    </div>
+  </div>
+  {{/each}}
+</div>
+<div  class="dark-box-button">
+  <div style="margin-top: 7px;">
+    <center>
+    <h3 style="color: #fff; ">${{total_compra}} MXN</h3>
+    <b style="font-size: 20px;">Envio: ${{envio}} MXN</b>
+
+    </center>
+    <div class="button-capsule">
+      <center>
+      <a class="button-bordered raspberry-button floating-button-50" onclick="borrar_carrito();">Limpiar <i class="fa fa-trash" aria-hidden="true"></i>
+      </a>
+      <a class="button-bordered white-button floating-button-50" onclick="generate_register_products();">Finalizar <i class="fa fa-check" aria-hidden="true"></i>
+      </a>
+      </center>
+    </div>
+  </div>
+  <br/><br/><br/>
+</div>
+
+<script>
+function clicked_finish() {
+console.log('finalizado');
+}
+function borrar_carrito(){
+dropTable('carrito');
+$('.select').removeClass('rubberBand');
+$('.select').removeClass('select');
+$('.tab-bott').first().addClass('animated rubberBand');
+$('.tab-bott').first().addClass('select');
+get_products();
+}
+function quit_product_cart(producto_id){
+  deleteRegisterQueryAcces('carrito','producto_id',producto_id ,function(data){
+    $('#product'+producto_id).remove();
+    my_products('layout-div', false);
+  });
+}
+
+function generate_register_products(){
+  var jj = '{{#renderStaticPartial productos_no_images}} {{/renderStaticPartial}}';
+  console.log(jj);
+  var monto_total = parseFloat("{{total_compra}}");
+  var envio = parseFloat("{{envio}}");
+  var productoshash = jj;
+
+  var bytes = secureRandom(20000, {type: 'Uint8Array'});
+  var sum = bytes.reduce(function(a, b) { return a + b; }, 0);
+  var codigo = "mobile_UG" + sum;
+  var compose_data = [codigo, monto_total,envio,productoshash];
+  var insertinCART = insertData(compose_data,'pedido',myDataBase,Schema,true);
+
+  lastRegisterQuery('pedido', function(data){
+      loadView(data, 'payment_confirm', 'layout-div');
+      hide_ajax();
+
+  });
+}
+var vheiwhg = $(window).height()-130;
+var xheight = vheiwhg * 0.70;
+var yheight = vheiwhg * 0.30;
+$('.dark-box-button').height(yheight);
+$('.dark-box-button').css('top', xheight );
+$('.products-box').height(xheight);
+
+
+</script>
+{{else}}
+<center>
+  <br/><br/><br/><br/>
+<h3>No hay productos en el carrito.</h3><br/><br/>
+<a onclick="get_products();" class="button-bordered gold-button mid-button">Seguir comprando <i class="fa fa-cart-plus" aria-hidden="true"></i>
+</a>
+</center>
+{{/if}}

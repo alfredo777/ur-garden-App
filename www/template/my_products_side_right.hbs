@@ -1,0 +1,41 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div id="productos"></div>
+
+<script type="text/javascript">
+    show_ajax();
+    callAllQuery('carrito', function(callback){
+        var agrouped = [];
+        $.each(callback, function(i, item){
+          agrouped.push({
+            product: callback[i].producto_id,
+            color: callback[i].color,
+            token: callback[i].session_token
+          });
+        });
+        url = domine + 'api/my_products';
+        console.log(url);
+        $.ajax({
+        url: url,
+        cache: true,
+        method: 'POST',
+        data: {"productos": JSON.stringify(agrouped)},
+        success: function(data){
+        console.log(data);
+        console.log('Respuesta satisfactoria');
+        loadView(data,'product_cart', 'productos',false);
+        hide_ajax();
+        return false;
+        },
+        error: function(err) {
+          console.log(err);
+        }
+        });
+    });
+
+</script>
+
+

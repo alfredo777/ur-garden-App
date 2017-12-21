@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="css/jquery.bxslider.min.css">
+<script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.slider').bxSlider({
+	    mode: 'fade',
+		adaptiveHeight: true,
+		responsive: true,
+		touchEnabled: true
+		});
+});
+</script>
+<center>
+<div class="slider">
+	{{#each imagenes}}
+	 <img src="{{img}}" alt="" width="70%" />
+	{{/each}}
+</div>
+</center>
+<script>
+hide_ajax();
+</script>

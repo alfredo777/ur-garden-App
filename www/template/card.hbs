@@ -1,0 +1,90 @@
+<script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<script type="text/javascript" >
+$(document).ready(function(){
+setTimeout(function(){
+	Conekta.setPublishableKey("{{conekta_token}}");
+	var conektaSuccessResponseHandler = function(token) {
+	var $form = $("#card-form");
+	//Inserta el token_id en la forma para que se envíe al servidor
+	$form.append($("<input type='hidden' id='conektaTokenId' name='conektaTokenId'>").val(token.id));
+	//$form.get(0).submit(); Hace submit
+	$.ajax({
+	url: domine + $form.attr('action'),
+	type: 'POST',
+	data: $form.serialize(),
+	success: function(data){
+		console.log('Se ha enviado la petición de cobro');
+		var compose_data = [data.codigo,data.conekta_order]
+	    insertData(compose_data, 'pedido_realizado', myDataBase, Schema, false);
+	    dropTable('pedido');
+	    dropTable('carrito');
+	    loadView(data, 'pedido', 'layout-div');
+		console.log(data);
+		hide_ajax();
+	},
+	error: function(error){
+		alert('No ha podido realizarce el cargo debido a un error, le agradecemos su compresión');
+		hide_ajax();
+	}
+	});
+	};
+	var conektaErrorResponseHandler = function(response) {
+	var $form = $("#card-form");
+	$form.find(".card-errors").text(response.message_to_purchaser);
+	$form.find("button").prop("disabled", false);
+	};
+	//jQuery para que genere el token después de dar click en submit
+	$(function () {
+	$("#card-form").submit(function(event) {
+	$('#blur-msg').html('Procesando pago con tarjeta ....');
+	var $form = $(this);
+	// Previene hacer submit más de una vez
+	Conekta.token.create($form, conektaSuccessResponseHandler, conektaErrorResponseHandler);
+	return false;
+	});
+	});
+},3000);
+});
+</script>
+<div class="post">
+	<div class="container">
+		<br/>
+		<div class="post-head">
+			<ul>
+				<li><h4>PAGAR CON TARJETA ${{total_con_envio}}</h4></li>
+			</ul>
+		</div><br/><br/>
+		<form id="card-form" action="api/tarjeta_pago_mobil">
+			<label>Nombre
+				<input type="text" size="20" data-conekta="card[name]" class="form-control" value="">
+			</label>
+			<label>Número de tarjeta
+				<input type="text" size="20" data-conekta="card[number]" class="form-control" value="">
+			</label>
+			<label>Mes
+				<input type="text" size="2" data-conekta="card[exp_month]" class="form-control" value="" class="col2">
+			</label>
+			<label>Año
+				<input type="text" size="4" data-conekta="card[exp_year]" class="form-control" value="" class="col4">
+			</label>
+			<label>CVC (Código de verificación <i> son 3 o 4 dígitos que usualmente vienen en la parte reversa de la tarjeta.</i>)
+				<input type="text" size="4" data-conekta="card[cvc]" class="form-control" value=""  class="col4">
+			</label>
+
+			<input type="text" name="line_items_id" value="{{line_items_id}}" style="display:none;">
+			<input type="text" name="email" value="{{email}}" style="display:none;">
+			<input type="text" name="codigo" value="{{codigo}}" style="display:none;">
+			<input type="text" name="pedido" value="{{id}}" style="display:none;">
+			<input type="text" name="total" value="{{total}}" style="display:none;">
+			<input type="text" name="envio" value="{{envio}}" style="display:none;">
+			
+
+			<button type="submit" class="button-bordered aqua-button-inverse full-button">Generar Pago</button>
+		</form>
+	</div>
+</div>

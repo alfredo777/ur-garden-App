@@ -1,0 +1,21 @@
+{
+  "name": "secure-random",
+  "version": "1.1.1",
+  "description": "Normalize the creation of cryptographically strong random values.",
+  "repo": "https://github.com/jprichardson/secure-random",
+  "keywords": [
+    "crypto",
+    "cryptography",
+    "secure",
+    "random",
+    "rand",
+    "generator",
+    "number"
+  ],
+  "ignore": [
+    "node_modules/",
+    "package.json",
+    "component.json"
+  ],
+  "main": "./lib/secure-random.js"
+}

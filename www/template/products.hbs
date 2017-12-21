@@ -1,0 +1,89 @@
+<script type="text/javascript">
+var paginateALL = window.localStorage.setItem("PageProducts",1);
+</script>
+<div class="post">
+  <div class="container">
+    <br/>
+    <div class="post-head">
+      <ul>
+        {{#if categoria}}
+        <li style="width:50px; text-transform: uppercase;"><h4>{{categoria}}</h4></li>
+        {{else}}
+        <li style="width:50px;"><h4>PRODUCTOS</h4></li>
+        {{/if}}
+      </ul>
+    </div>
+    <br/><br/><br/>
+    <div class="clear-both"></div>
+    <div class="post-content">
+      <div class="row" id="productos">
+        {{#each productos}}
+        <div class="col s6" style="margin-top:10px;">
+          <div class="content">
+            <div class="get-p{{Id}}">
+              <img id="img{{Id}}" src="{{img}}" alt="">
+            </div>
+            <center>
+            <p class="truncate-text title-text">{{nombre}}</p>
+            </center>
+            {{#if descuento}}
+            <div class="price" style="font-size: 15px; height:20px;">de <span>${{precio}}</span> a ${{precio_final}}</div>
+            {{else}}
+            <div class="price" style="height:20px;"> ${{precio_final}}</div>
+            {{/if}}
+            <div id="descripccion{{Id}}" data-v="{{descripccion}}"></div>
+            <center>
+            <a class="button-bordered gold-button button-90" onclick="add_product_selection_to_data_base({{Id}},'{{color1}}','{{nombre}}')"><i class="fa fa-shopping-cart"></i> Agregar</a>
+            <div id="favorite-{{Id}}">
+              <script type="text/javascript">
+              $(document).ready(function(){
+              favotied('{{Id}}');
+              });
+              </script>
+            </div>
+            </center>
+          </div>
+        </div>
+        <script>
+        $(".get-p{{Id}}").click(function(){
+          show_ajax();
+          var des = $('#descripccion{{Id}}').data('v');
+          var producto = {
+            'Id': "{{Id}}",
+            'nombre': "{{nombre}}",
+            'precio': "{{precio}}",
+            'precio_final': "{{precio_final}}",
+            'descripccion': des,
+            'descuento': "{{descuento}}",
+            'nombre_cientifico': "{{{nombre_cientifico}}}",
+            'img': "{{img}}",
+            "color1": "{{color1}}",
+            "color2": "{{color2}}",
+            "color3": "{{color3}}",
+            "color4": "{{color4}}",
+            "color5": "{{color5}}"
+
+          }
+          hide_ajax();
+          console.log(producto);
+          loadView(producto,'view_product','layout-div');
+          });
+        </script>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="clear-both"></div>
+  {{#if paginas}}
+  <div class="pagination-blog" style="display:none;" id="no-products">
+    <center><b>Ya no hay mas productos por cargar.</b></center>
+  </div>
+  {{/if}}
+
+{{#if paginas}}
+<script type="text/javascript">
+var paginateALL = window.localStorage.getItem("PageProducts");
+PaginageProducts(paginateALL);
+</script>
+{{/if}}
+</div>

@@ -1,0 +1,70 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div class="checkout pages section">
+	<div class="container">
+		<div class="pages-head" style="margin-top: -50px;">
+			<h3>DATOS DEL PEDIDO</h3>
+		</div>
+		<div class="checkout-content">
+			<div class="row">
+				<div class="col s12">
+					<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							{{#if pedido.estatus_del_pedido}}
+							<div class="collapsible-header active"><h5> <i class="fa fa-archive" aria-hidden="true" style="margin-top:-10px;"></i> Estatus</h5></div>
+							<div class="collapsible-body"> {{pedido.estatus_del_pedido}}</div>
+							{{else}}
+							<div class="collapsible-header active"><h5> <i class="fa fa-archive" aria-hidden="true" style="margin-top:-10px;"></i> Estatus</h5></div>
+							<div class="collapsible-body">  <i>Compra recibida.</i></div>
+							{{/if}}
+						</li>
+						<li>
+							<div class="collapsible-header "><h5> <i class="fa fa-qrcode" aria-hidden="true" style="margin-top:-10px;"></i> Código</h5></div>
+							<div class="collapsible-body">
+								<i>{{pedido.codigo}}</i>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header"><h5><i class="fa fa-envelope-o" aria-hidden="true" style="margin-top:-10px;"></i> Email</h5></div>
+							<div class="collapsible-body">
+								{{pedido.email}}
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header"><h5><i class="fa fa-credit-card-alt" aria-hidden="true" style="margin-top:-10px;"></i> Método de pago </h5></div>
+							<div class="collapsible-body"> 
+							{{pedido.metodo_de_pago}}
+							{{#equal pedido.metodo_de_pago 'oxxo'}}
+							   Código de pago: <b>{{pedido.oxxocode}}</b>
+							{{/equal}}
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header"><h5><i class="fa fa-money" aria-hidden="true" style="margin-top:-10px;"></i> Valor del pedido: </h5></div>
+							<div class="collapsible-body">
+								${{pedido.total}} MXN
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header"><h5><i class="fa fa-leaf" aria-hidden="true" style="margin-top:-10px;"></i>  Envio</h5></div>
+							<div class="collapsible-body">
+								${{pedido.costo_de_envio}} MXN
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header active"><h5><i class="fa fa-map-marker" aria-hidden="true" style="margin-top:-10px;"></i> Dirección del envio</h5></div>
+							<div class="collapsible-body">
+								{{pedido.direccion}}, calle {{pedido.calle}}, colonia {{pedido.colonia}}, {{pedido.localidad}}, {{pedido.estado}}, C.P.{{pedido.cpostals}}
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/materialize.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>

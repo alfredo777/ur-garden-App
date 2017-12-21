@@ -1,0 +1,15 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+{{#each categorias}}
+<div class="category">
+	<a onclick="search_result('{{search}}');">
+		{{#if img}}
+		<img src="{{#host img}}{{/host}}" width="100%">
+		{{/if}}
+		{{name}}
+	</a>
+</div>
+{{/each}}

@@ -1,0 +1,84 @@
+<script type="text/javascript">
+window.localStorage.setItem("PageProducts", null);
+var page = window.localStorage.getItem("PageProducts");
+window.localStorage.setItem("AllProducts", null);
+</script>
+<div class="post">
+	<div class="container">
+		<br/>
+		<div class="post-head">
+			<ul>
+				<li><h4>DATOS DEL CLIENTE</h4></li>
+			</ul>
+		</div>
+		<br/>
+		<div class="payment-form-container">
+			<form id="form-pedido">
+				<input type="text" name="nombre_persona_que_ordena" placeholder="Ingresa tu nombre" class="input-field col s12" value=""  >
+				<input type="text" name="apellidos_persona_que_ordena" placeholder="Ingresa tus apellidos" class="input-field col s12" value="" >
+				<input type="text" name="email" placeholder="Ingresa tu email" class="input-field col s12"  value="" >
+				<input type="text" name="telefono_fijo" placeholder="Ingresa tu telefono fijo" class="input-field col s12" value="" >
+				<input type="text" name="telefono_celular" placeholder="Ingresa tu celular" class="input-field col s12"  value="">
+				<input type="text" name="direccion" placeholder="Ingresa tu dirección" class="input-field col s12" value="">
+				<input type="text" name="calle" placeholder="Calle" class="input-field col s6" value="">
+				<input type="text" name="colonia" placeholder="Colonia" class="input-field col s6" value="">
+				<input type="text" name="numero_interior" placeholder="Número interior" class="input-field col s6" value="10">
+				<input type="text" name="numero_exterior" placeholder="Número exterior" class="input-field col s6"><br/>
+				<select name="estado" style="display:block !important;" >
+					<option value="Ciudad de México">Ciudad de México</option>
+					<option value="Estado de México">Estado de México</option>
+					<option value="Hidalgo">Hidalgo</option>
+					<option value="Morelos">Morelos</option>
+				</select><br/>
+				<input type="text" name="localidad" placeholder="Localidad" class="input-field col s6" value="">
+				<input type="text" name="cpostal" placeholder="Código postal" class="input-field col s6" value="">
+				<input type="text" name="persona_autorizada_a_recoger_1" placeholder="Otra persona autorizada a recibir la mercancia" class="input-field col s12" value=""><br/>
+				<select name="payment_method" style="display:block !important;" >
+					<option value="oxxo">Pago en OXXO</option>
+					<option value="card">Pago con tarjeta</option>
+				</select><br/>
+
+				<input type="text" name="productos"  value="{{productoshash}}" style="display:none;">
+				<input type="text" name="total"  value="{{monto_total}}" style="display:none;">
+				<input type="text" name="envio"  value="{{envio}}" style="display:none;">
+				<input type="text" name="codigo"  value="{{codigo}}" style="display:none;">
+				<input type="text" name="session_token"  value="{{#session_token}}{{/session_token}}" style="display:none;">
+				<button class="button-bordered aqua-button-inverse full-button" class="">Continuar al pago</button>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$("#form-pedido").submit(function(e) {
+	console.log('Enviando pedido');
+	var data = $('#form-pedido').serialize();
+	url = domine + 'api/generate_mobile_order';
+	console.log(url);
+	$.ajax({
+	url: url,
+	cache: true,
+	method: 'POST',
+	data: data,
+	success: function(data) {
+	console.log('Respuesta satisfactoria');
+	console.log(data);
+    if(data.type == 'oxxo'){
+	var compose_data = [data.codigo,data.conekta_order]
+	insertData(compose_data, 'pedido_realizado', myDataBase, Schema, false);
+	dropTable('pedido');
+	dropTable('carrito');
+	loadView(data, 'oxxo', 'layout-div');
+    }
+
+    if(data.type == 'card'){
+      loadView(data, 'card', 'layout-div');
+    }
+	hide_ajax();
+	},
+	error: function(err) {
+	console.log(err);
+	}
+	});
+    e.preventDefault();
+});
+</script>

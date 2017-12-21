@@ -1,0 +1,13 @@
+<div class="tab-bott select" onclick="get_products();"><div class="fit-ico"><i class="fa fa-home" aria-hidden="true"></i></div>  <div class="sucbs">Inicio</div></div>
+<div class="tab-bott" onclick="all_categories('layout-div');" ><div class="fit-ico"><i class="fa fa-filter" aria-hidden="true"></i></div> <div class="sucbs">Categorías</div></div>
+<div class="tab-bott" onclick="my_products('layout-div');"><div class="fit-ico "><i class="fa fa-shopping-cart" aria-hidden="true"></i></div> <div class="sucbs">Carrito</div></div>
+<div class="tab-bott" onclick="get_favorites();"><div class="fit-ico"><i class="fa fa-heart" aria-hidden="true"></i></div> <div class="sucbs">Favoritos</div></div>
+<div class="tab-bott" onclick="open_pedidos();"><div class="fit-ico" ><i class="fa fa-leaf" aria-hidden="true"></i></div>  <div class="sucbs">Pedidos</div></div>
+<script type="text/javascript">
+$('.tab-bott').click(function(){
+	$('.select').removeClass('rubberBand');
+	$('.select').removeClass('select');
+	$(this).addClass('animated rubberBand');
+	$(this).addClass('select');
+});
+</script>

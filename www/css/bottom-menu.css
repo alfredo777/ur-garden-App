@@ -1,0 +1,47 @@
+.bot-m{
+	width: 100%;
+	height: 50px;
+	padding: 2px;
+	border-top: solid 3px #93C54B;
+	background: #fff;
+	position: fixed;
+	bottom: 0;
+	z-index: 999999999999999999999;
+}
+
+.bot-m .tab-bott{
+	padding: 2px;
+	text-align: center;
+	margin-left: 3px;
+	font-size: 20px;
+	background: transparent;
+	float:left;
+	margin-top: -8px;
+	width: 18.5%;
+}
+
+.fit-ico{
+   width: 100%;
+   float: none;
+   color: #D1EBD9;
+   margin-top: 5px;
+}
+
+.bot-m .tab-bott .sucbs{
+   font-size: 8px;
+   text-align: center;
+   color: #494949;
+   width: 100%;
+   float: none;
+   margin-top: -1px;
+}
+.bot-m .select .fit-ico{
+	color: #93C54B;
+	background: #F1F1F1;
+}
+
+.bot-m .select .sucbs{
+	border-bottom: solid 4px #93C54B;
+	background: #F1F1F1;
+}
+

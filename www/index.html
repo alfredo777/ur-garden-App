@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+  <head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+    https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+    * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;  font-src 'self' https://fonts.gstatic.com data:; media-src *; img-src * data: content:; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval';">
+    <meta name="viewport" content="width=device-width, initial-scale=1  maximum-scale=1 user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.css">
+    <link rel="stylesheet" href="css/owl.transitions.css">
+    <link rel="stylesheet" href="css/fakeLoader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bottom-menu.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/categories.css">
+    <link rel="stylesheet" href="css/buttons-special.css">
+    <link rel="stylesheet" href="css/blur-loader.css">
+    <link rel="stylesheet" href="css/form-style.css">
+    <link rel="apple-touch-icon" href="res/icon/ios/icon.png">
+
+
+    
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>Ur Garden</title>
+  </head>
+
+
+  <div id="blur" style="display: none;">
+    <center>
+    <i class="fa fa-refresh fa-spin" style="font-size:24px"></i><br/>
+    <div id="blur-msg"></div>
+    </center>
+  </div>
+  <div class="blur-load"  style="display: none;">
+  </div>
+
+  <body>
+    <div id="back" style="background: url('img/back2.jpg'); width: 100%; background-size: 100% 100%; display:none;"></div>
+    <div id="bodyx" style="display:none;">
+    <div id="menu-top" style="position:relative;"></div>
+    <br/><br/><br/><br/>
+    <div id="layout-div" style="margin-bottom: 90px;">
+    </div>
+    <div id="menu-bottom" class="bot-m"></div>
+    </div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="lib/handlebars/handlebars.min.js"></script>
+    <script src="lib/secure-random/lib/secure-random.js"></script>
+    <script src="js/handlebars-helpers.js"></script>
+    <script src="js/database.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/principal-functions.js"></script>
+
+    <script type="text/javascript">
+        function favotied(producto_id) {
+            var favorite = [];
+            var button;
+            var button1 = '<div id="button_favorite' + producto_id + '"><a class="button-bordered red-button-no-inverse button-90" onclick="add_product_to_favorite(' + producto_id + ')">' + '<i class="fa fa-heart"></i> Favorito</a></div>';
+            var button2 = '<div id="button_favorite' + producto_id + '"><a class="button-bordered red-button-inverse button-90" onclick="remove_product_favorite(' + producto_id + ')">' + '<i class="fa fa-heart"></i> Favorito </a></div>';
+            setTimeout(function() {
+                findQueryRequest('favoritos', 'producto_id', producto_id, function(data) {
+                    if (data == null || data == '') {
+                        favorite.push(false);
+                    } else {
+                        favorite.push(true);
+                    }
+                });
+            }, 100);
+            setTimeout(function() {
+                var lxc = favorite[0];
+                console.log(favorite);
+                console.log(lxc);
+                if (lxc == true) {
+                    button = button2;
+                } else {
+                    button = button1;
+                }
+            }, 550);
+
+            setTimeout(function() {
+                console.log(button);
+                $('#favorite-' + producto_id).html(button);
+            }, 1090);
+        }
+    </script>
+  </body>
+</html>
